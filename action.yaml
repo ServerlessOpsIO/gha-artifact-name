@@ -1,0 +1,35 @@
+name: 'store-artifacts'
+description: 'Store workspace artifacts'
+
+inputs:
+  artifact_name_override:
+    description: Override name of artifact to use
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Check GitHub env set
+      id: check-github-env
+      if: ${{ ! env.GITHUB_REPOSITORY_OWNER_PART_SLUG_URL }}
+      uses: actions/github-script@v3
+      with:
+        script: |
+          core.setFailed('Please make sure to set the GitHub Action environment variable `GITHUB_REPOSITORY_OWNER_PART_SLUG_URL` set by using the `ServerlessOpsIO/gha-setup-workspace` or `rlespinasse/github-slug-action@v4` action')
+
+    - name: Set artifact name
+      id: set-artifact-name
+      shell: bash
+      run: |
+        if [ ${{ inputs.artifact_name_override }} != '' ]; then
+          name="${{ inputs.artifact_name_override }}";
+        else
+          name="${{ env.GITHUB_REPOSITORY_SLUG }}-${{ env.GITHUB_REF_SLUG_URL }}-${{ github.run_number }}-${{ github.sha }}";
+        fi;
+        echo "artifact-name=$name" >> $GITHUB_OUTPUT
+
+outputs:
+  artifact_name:
+    description: Name of artifact stored
+    value: ${{ steps.set-artifact-name.outputs.artifact-name }}
