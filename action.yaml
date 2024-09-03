@@ -22,7 +22,7 @@ runs:
       id: set-artifact-name
       shell: bash
       run: |
-        if [ ${{ inputs.artifact_name_override }} != '' ]; then
+        if [ '${{ inputs.artifact_name_override }}' != '' ]; then
           name="${{ inputs.artifact_name_override }}";
         else
           name="${{ env.GITHUB_REPOSITORY_SLUG }}-${{ env.GITHUB_REF_SLUG_URL }}-${{ github.run_number }}-${{ github.sha }}";
