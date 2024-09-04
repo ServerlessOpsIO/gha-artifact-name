@@ -29,9 +29,9 @@ runs:
           name="${{ inputs.artifact_name_override }}";
         fi;
         echo "Name resolved to: $name"
-        echo "artifact_name=$name" >> $GITHUB_OUTPUT
+        echo "artifact-name=$name" >> $GITHUB_OUTPUT
 
 outputs:
-  artifact_name:
+  artifact-name:
     description: Name of artifact stored
-    value: ${{ steps.set-artifact-name.outputs.artifact_name }}
+    value: ${{ steps.set-artifact-name.outputs.artifact-name }}
