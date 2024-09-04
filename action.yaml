@@ -5,7 +5,6 @@ inputs:
   artifact_name_override:
     description: Override name of artifact to use
     required: false
-    default: ''
 
 runs:
   using: composite
@@ -21,11 +20,13 @@ runs:
     - name: Set artifact name
       id: set-artifact-name
       shell: bash
+      env:
+        ARTIFACT_NAME: ${{ inputs.artifact_name_override }}
       run: |
-        if [ '${{ inputs.artifact_name_override }}' != '' ]; then
-          name="${{ inputs.artifact_name_override }}";
-        else
+        if [ -z "${ARTIFACT_NAME}" ]; then
           name="${{ env.GITHUB_REPOSITORY_SLUG }}-${{ env.GITHUB_REF_SLUG_URL }}-${{ github.run_number }}-${{ github.sha }}";
+        else
+          name="${{ inputs.artifact_name_override }}";
         fi;
         echo "artifact-name=$name" >> $GITHUB_OUTPUT
 
