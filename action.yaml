@@ -28,6 +28,7 @@ runs:
         else
           name="${{ inputs.artifact_name_override }}";
         fi;
+        echo "Name resolved to: $name"
         echo "artifact-name=$name" >> $GITHUB_OUTPUT
 
 outputs:
