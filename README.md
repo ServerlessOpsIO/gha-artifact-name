@@ -11,11 +11,11 @@ The `gha-artifact-name` action performs the following tasks:
 
 ## Inputs
 
-- `artifact_name` (optional): Override the name of the artifact to use. Default is an empty string.
+- `artifact-name` (optional): Override the name of the artifact to use. Default is an empty string.
 
 ## Outputs
 
-- `artifact_name`: The generated name of the artifact.
+- `artifact-name`: The generated name of the artifact.
 
 ## Usage
 
